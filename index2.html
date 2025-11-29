@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head Tag -->
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<title> My Portfolio</title>
+		<link rel="stylesheet" href="style2.css">
+	</head>
+	
+<!-- Body Tag --> 
+<body>
+
+<!-- Navigation Bar-->	
+<header>
+	<nav class="navbar">
+		<h1 class="brand">My Portfolio</h1>
+		<ul class="nav-links">
+			<li><a href="#about">About</a></li>
+			<li><a href="#projects">Projects</a></li>
+			<li><a href="#contact">Contact Us</a></li>
+		</ul>
+		<button id="themeToggle" class="theme-btn">🌙</button>
+	</nav>
+</header>
+
+<!-- Hero Section--> 
+<section class="hero fade-in">
+	<div class="hero-content">
+		<h2> Hello. I'm <span class="accent"> Natassha</span></h2>
+		<p> Full Stack Development | Multimedia Arts | Marketing</p>
+		<button id="contactBtn">Contact Me</button>
+	</div>
+</section>
+
+<!-- About Section -->
+<section id="about" class="section fade-in">
+	<h2>About Natassha</h2>
+	<p> A passionate web developer who loves creating web sites and enjoy learning more techniques in Web.</p>
+</section>
+
+<!--Projects Section -->
+<section id="projects" class="section fade-in">
+	<h2>My Projects</h2>
+	<div class="projects-grid">
+		<div class="project-card">
+			<h3> Project 1</h3>
+			<p> Info Website</p>	
+		</div>
+		<div class="project-card">
+			<h3> Project 2</h3>
+			<p> Ecommerce Website</p>	
+		</div>
+		<div class="project-card">
+			<h3>Project 3</h3>
+			<p> Landing Page</p>
+		</div>
+	</div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact" class="section fade-in">
+	<h2>Contact Me</h2>
+	<form id="contactForm">
+		<input type="text" placeholder="Your Name" required />
+		<input type="email" placeholder="Your Email" required />
+		<textarea placeholder="Your Message" rows="5" required></textarea>
+		<button type="submit">Send</button>
+	</form>
+</section>
+
+
+<!-- Footer -->
+<footer>
+<p>© 2025 NPC Porfolio. All rights reserved.</p>
+</footer>
+
+<script src="script.js"></script>
+
+</body>	
+</html>
