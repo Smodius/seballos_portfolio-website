@@ -432,9 +432,14 @@ body.modal-open {
   max-width: 560px;
   max-height: 85vh;
   overflow-y: auto;
+  scrollbar-width: none;
   text-align: center;
   transform: translateY(24px);
   transition: transform 0.25s ease;
+}
+
+.modal-card::-webkit-scrollbar {
+  display: none;
 }
 
 .modal-overlay.open .modal-card {
