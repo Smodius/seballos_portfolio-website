@@ -11,6 +11,17 @@ document.getElementById("contactForm").addEventListener("submit", (e) => {
   e.target.reset();
 });
 
+// Copy email to clipboard
+const copyEmailBtn = document.getElementById("copyEmailBtn");
+if (copyEmailBtn) {
+  copyEmailBtn.addEventListener("click", () => {
+    navigator.clipboard.writeText("natassha@email.com");
+    const original = copyEmailBtn.textContent;
+    copyEmailBtn.textContent = "Copied!";
+    setTimeout(() => (copyEmailBtn.textContent = original), 1500);
+  });
+}
+
 // Dark mode toggle
 const themeToggle = document.getElementById("themeToggle");
 themeToggle.addEventListener("click", () => {
