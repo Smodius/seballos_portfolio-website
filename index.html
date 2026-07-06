@@ -26,7 +26,7 @@
 	<section class="card hero-card fade-in">
 		<div class="top-row">
 			<div class="top-left">
-				<span class="pill pill-static">natassha@email.com</span>
+				<span class="pill pill-static">joshuaseballosc@gmail.com</span>
 				<button class="pill pill-btn" id="copyEmailBtn">Copy</button>
 				<a class="pill pill-btn" href="#contact">CV</a>
 			</div>
@@ -41,7 +41,7 @@
 
 		<div class="avatar-wrap">
 			<div class="avatar">N</div>
-			<span class="name-badge">↙ Natassha</span>
+			<span class="name-badge">↙ Joshua</span>
 		</div>
 
 		<h2 class="hero-heading">Building <span class="accent">full stack</span> products, multimedia, and marketing experiences.</h2>
@@ -51,9 +51,13 @@
 		<div class="skills-strip">
 			<span>HTML</span>
 			<span>CSS</span>
-			<span>JavaScript</span>
+			<span>JavaScript/Typescript</span>
 			<span>React</span>
 			<span>Node.js</span>
+			<span>Vercel</span>
+			<span>Drizzle</span>
+			<span>Supabase</span>
+			<span>postgreSQL</span>
 		</div>
 	</section>
 
@@ -93,42 +97,42 @@
 		<span class="badge">Work</span>
 
 		<div class="projects-grid">
-			<div class="project-card">
-				<h3>Project 1</h3>
-				<p>Info Website</p>
-			</div>
-			<div class="project-card">
+			<button type="button" class="project-card" data-project="church-monitoring">
+				<h3>Church Monitoring App</h3>
+				<p>Monitoring Webapp</p>
+			</button>
+			<button type="button" class="project-card" data-project="project-2">
 				<h3>Project 2</h3>
 				<p>Ecommerce Website</p>
-			</div>
-			<div class="project-card">
+			</button>
+			<button type="button" class="project-card" data-project="project-3">
 				<h3>Project 3</h3>
 				<p>Landing Page</p>
-			</div>
-						<div class="project-card">
+			</button>
+			<button type="button" class="project-card" data-project="project-3">
 				<h3>Project 3</h3>
 				<p>Landing Page</p>
-			</div>
-						<div class="project-card">
+			</button>
+			<button type="button" class="project-card" data-project="project-3">
 				<h3>Project 3</h3>
 				<p>Landing Page</p>
-			</div>
-						<div class="project-card">
+			</button>
+			<button type="button" class="project-card" data-project="project-3">
 				<h3>Project 3</h3>
 				<p>Landing Page</p>
-			</div>
-						<div class="project-card">
+			</button>
+			<button type="button" class="project-card" data-project="project-3">
 				<h3>Project 3</h3>
 				<p>Landing Page</p>
-			</div>
-						<div class="project-card">
+			</button>
+			<button type="button" class="project-card" data-project="project-3">
 				<h3>Project 3</h3>
 				<p>Landing Page</p>
-			</div>
-						<div class="project-card">
+			</button>
+			<button type="button" class="project-card" data-project="project-3">
 				<h3>Project 3</h3>
 				<p>Landing Page</p>
-			</div>
+			</button>
 		</div>
 	</section>
 
@@ -156,6 +160,53 @@
 	</footer>
 
 </div>
+
+<!-- Project Modal -->
+<div class="modal-overlay" id="projectModal" aria-hidden="true">
+	<div class="modal-card" role="dialog" aria-modal="true">
+		<button type="button" class="modal-close" id="modalClose" aria-label="Close">✕</button>
+		<div class="modal-body" id="modalBody"></div>
+	</div>
+</div>
+
+<!-- Project Content Templates -->
+<template id="template-church-monitoring">
+	<h2 class="section-heading">Church Monitoring App</h2>
+	<span class="badge">Monitoring Webapp</span>
+	<div class="tech-tags">
+		<span>HTML</span>
+		<span>CSS</span>
+		<span>JavaScript/Typescript</span>
+		<span>React</span>
+		<span>Node.js</span>
+		<span>Vercel</span>
+		<span>Drizzle</span>
+		<span>Supabase</span>
+		<span>postgreSQL</span>
+	</div>
+	<p>Disciple MS is a web app that helps churches track disciples, leaders, and their
+		hierarchy. Leaders can search and filter disciples, log contact and status, tie each
+		person to a leader and network, and mark encounter progress — all from one dashboard.
+		Access is invite-only, guarded behind an email/password sign-in.</p>
+	<div class="project-gallery">
+		<img src="church-monitor-app/Screenshot%202026-07-06%20185212.png" alt="Disciple Monitoring System sign-in screen">
+		<img src="church-monitor-app/Screenshot%202026-07-06%20185156.png" alt="Disciples table showing name, age, status, contact, role, leader, and encounter columns">
+	</div>
+</template>
+
+<template id="template-project-2">
+	<h2 class="section-heading">Project 2</h2>
+	<span class="badge">Ecommerce Website</span>
+	<p>Describe this ecommerce project here: what it does, the tech stack you used, and your
+		role in building it.</p>
+</template>
+
+<template id="template-project-3">
+	<h2 class="section-heading">Project 3</h2>
+	<span class="badge">Landing Page</span>
+	<p>Describe this landing page project here: what it does, the tech stack you used, and
+		your role in building it.</p>
+</template>
 
 <button id="themeToggle" class="theme-btn">🌙</button>
 

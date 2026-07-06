@@ -255,6 +255,24 @@ body {
   color: var(--accent-color);
 }
 
+/* Compact tech tag list (e.g. inside the project modal) */
+.tech-tags {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 12px 0 20px;
+}
+
+.tech-tags span {
+  background: var(--pill-bg);
+  color: var(--text-muted);
+  font-weight: 500;
+  font-size: 0.8rem;
+  padding: 5px 14px;
+  border-radius: 999px;
+}
+
 /* Skills / logo strip */
 .skills-strip {
   display: flex;
@@ -341,6 +359,13 @@ body {
   background: var(--pill-bg);
   padding: 20px;
   border-radius: 20px;
+  border: none;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
   transition: transform 0.2s, background 0.3s;
 }
 
@@ -356,6 +381,78 @@ body {
 .project-card p {
   font-size: 0.85rem;
   color: var(--text-muted);
+}
+
+/* Project detail gallery */
+.project-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.project-gallery img {
+  width: 100%;
+  display: block;
+  border-radius: 16px;
+  border: 1px solid var(--border-color);
+}
+
+/* Project modal */
+body.modal-open {
+  overflow: hidden;
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+  z-index: 2000;
+}
+
+.modal-overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-card {
+  position: relative;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 28px;
+  padding: 40px;
+  width: 100%;
+  max-width: 560px;
+  max-height: 85vh;
+  overflow-y: auto;
+  text-align: center;
+  transform: translateY(24px);
+  transition: transform 0.25s ease;
+}
+
+.modal-overlay.open .modal-card {
+  transform: translateY(0);
+}
+
+.modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 50%;
+  background: var(--pill-bg);
+  color: var(--text-color);
+  font-size: 1rem;
+  cursor: pointer;
 }
 
 /* Contact card */
