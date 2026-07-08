@@ -21,11 +21,34 @@ if (contactForm) {
 const copyEmailBtn = document.getElementById("copyEmailBtn");
 if (copyEmailBtn) {
   copyEmailBtn.addEventListener("click", () => {
-    navigator.clipboard.writeText("natassha@email.com");
+    navigator.clipboard.writeText("joshuaseballosc@gmail.com");
     const original = copyEmailBtn.textContent;
     copyEmailBtn.textContent = "Copied!";
-    setTimeout(() => (copyEmailBtn.textContent = original), 1500);
+    copyEmailBtn.classList.add("is-copied");
+    setTimeout(() => {
+      copyEmailBtn.textContent = original;
+      copyEmailBtn.classList.remove("is-copied");
+    }, 1500);
   });
+}
+
+// Fade the edges of the horizontal project gallery to signal there's more to
+// scroll, only on the side that actually has more content.
+const projectsGrid = document.querySelector(".projects-grid");
+if (projectsGrid) {
+  const updateGalleryMask = () => {
+    const atStart = projectsGrid.scrollLeft <= 4;
+    const atEnd =
+      projectsGrid.scrollLeft >= projectsGrid.scrollWidth - projectsGrid.clientWidth - 4;
+    const left = atStart ? "black" : "transparent";
+    const right = atEnd ? "black" : "transparent";
+    const mask = `linear-gradient(to right, ${left}, black 40px, black calc(100% - 40px), ${right})`;
+    projectsGrid.style.maskImage = mask;
+    projectsGrid.style.webkitMaskImage = mask;
+  };
+  updateGalleryMask();
+  projectsGrid.addEventListener("scroll", updateGalleryMask, { passive: true });
+  window.addEventListener("resize", updateGalleryMask);
 }
 
 // Project modal
@@ -65,6 +88,29 @@ if (projectModal && modalBody && modalClose) {
   });
 }
 
+// Cycle the "full stack" accent word through different fonts
+const accentEl = document.querySelector(".accent");
+const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+if (accentEl && !prefersReducedMotion) {
+  const accentFonts = [
+    "'Poppins', sans-serif",
+    "Georgia, serif",
+    "'Courier New', monospace",
+    "Impact, sans-serif",
+    "'Brush Script MT', cursive",
+  ];
+  let accentFontIndex = 0;
+
+  setInterval(() => {
+    accentEl.style.opacity = "0";
+    setTimeout(() => {
+      accentFontIndex = (accentFontIndex + 1) % accentFonts.length;
+      accentEl.style.fontFamily = accentFonts[accentFontIndex];
+      accentEl.style.opacity = "1";
+    }, 150);
+  }, 1500);
+}
+
 // Dark mode toggle
 const themeToggle = document.getElementById("themeToggle");
 if (themeToggle) {
@@ -74,18 +120,36 @@ if (themeToggle) {
   });
 }
 
-// Fade-in animation using Intersection Observer
+// Fade-in reveal using the Web Animations API. Sections are fully visible by
+// default (see .fade-in in style.css); this plays a one-off entrance overlay
+// on top of that resting state. If the observer never fires (headless
+// renderer, paused tab, JS disabled), content is simply already visible —
+// the reveal enhances, it never gates.
 const faders = document.querySelectorAll(".fade-in");
-const appearOptions = {
-  threshold: 0.2,
-};
+if (!prefersReducedMotion && "IntersectionObserver" in window && "animate" in Element.prototype) {
+  const appearOptions = {
+    rootMargin: "0px 0px -10% 0px",
+    threshold: 0.2,
+  };
 
-const appearOnScroll = new IntersectionObserver(function(entries, observer) {
-  entries.forEach(entry => {
-    if (!entry.isIntersecting) return;
-    entry.target.classList.add("show");
-    observer.unobserve(entry.target);
+  const appearOnScroll = new IntersectionObserver(function (entries, observer) {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.animate(
+        [
+          { opacity: 0, transform: "translateY(40px)" },
+          { opacity: 1, transform: "translateY(0)" },
+        ],
+        { duration: 1000, easing: "cubic-bezier(0.25, 1, 0.5, 1)" }
+      );
+      observer.unobserve(entry.target);
+    });
+  }, appearOptions);
+
+  faders.forEach((fader) => {
+    const rect = fader.getBoundingClientRect();
+    if (rect.top > window.innerHeight) {
+      appearOnScroll.observe(fader);
+    }
   });
-}, appearOptions);
-
-faders.forEach(fader => appearOnScroll.observe(fader));
+}

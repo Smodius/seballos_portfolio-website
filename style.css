@@ -14,6 +14,14 @@
   --card-bg: #ffffff;
   --border-color: rgba(0, 0, 0, 0.08);
   --pill-bg: #f2f2f3;
+
+  /* Brand accent: cobalt/indigo, used sparingly (CTAs, focus, one hero flourish) */
+  --brand-color: #3d4ed8;      /* button fill; paired with white text in both themes */
+  --brand-color-deep: #2c3aa8; /* button hover/active */
+  --brand-ink: #3d4ed8;        /* text-on-page role (accent word, focus ring, badge text) */
+  --brand-color-soft: rgba(61, 78, 216, 0.12); /* wash tint for badges */
+
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 /* Dark mode variables */
@@ -25,11 +33,21 @@ body.dark {
   --card-bg: #1c1c1e;
   --border-color: rgba(255, 255, 255, 0.08);
   --pill-bg: #2a2a2d;
+
+  /* --brand-color / --brand-color-deep stay constant: white button text needs the same contrast in both themes */
+  --brand-ink: #8a97f2;        /* lighter, for legibility as text against the dark canvas */
+  --brand-color-soft: rgba(138, 151, 242, 0.18);
 }
 
 body.dark .blob-2,
 body.dark .blob-4 {
   opacity: 0.12;
+}
+
+/* Dark mode conveys card depth via surface lightness (card lighter than canvas), not shadow */
+body.dark .card,
+body.dark .project-card {
+  box-shadow: none;
 }
 
 body {
@@ -38,6 +56,15 @@ body {
   color: var(--text-color);
   background-color: var(--bg-color);
   transition: background 0.3s, color 0.3s;
+}
+
+/* Titles use a distinct display face; everything smaller stays Poppins */
+h1, h2, h3, h4 {
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+p {
+  text-wrap: pretty;
 }
 
 /* Blurred background blobs */
@@ -55,6 +82,17 @@ body {
   background: var(--accent-color);
   filter: blur(120px);
   will-change: transform;
+}
+
+/* Three.js scene: floating wireframe shapes + particle field, behind the blobs */
+#bg3d-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 .blob-1 {
@@ -123,11 +161,11 @@ body {
 /* Shared card shell */
 .card {
   background: var(--card-bg);
-  border: 1px solid var(--border-color);
   border-radius: 32px;
   padding: 56px 72px;
   text-align: center;
-  transition: background 0.3s, border-color 0.3s, padding 0.3s;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  transition: background 0.3s, padding 0.3s;
 }
 
 /* Pills / buttons */
@@ -145,6 +183,16 @@ body {
   white-space: nowrap;
 }
 
+.pill:focus-visible,
+.project-card:focus-visible,
+.modal-close:focus-visible,
+.theme-btn:focus-visible,
+#contactForm input:focus-visible,
+#contactForm textarea:focus-visible {
+  outline: 2px solid var(--brand-ink);
+  outline-offset: 2px;
+}
+
 .pill-static {
   background: var(--pill-bg);
   color: var(--text-muted);
@@ -153,21 +201,47 @@ body {
 .pill-btn {
   background: var(--pill-bg);
   color: var(--text-color);
-  transition: background 0.2s;
+  transition: background 0.2s var(--ease-out-quart);
 }
 
 .pill-btn:hover {
   background: var(--border-color);
 }
 
+.pill-btn.is-copied {
+  background: var(--brand-color-soft);
+  color: var(--brand-ink);
+}
+
+/* Primary actions read a size step up from secondary/static pills, so
+   conceptual importance and visual weight actually match (see DESIGN.md
+   Components: Buttons). */
 .pill-dark {
-  background: var(--text-color);
-  color: var(--bg-color);
-  transition: opacity 0.2s;
+  padding: 10px 22px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  background: var(--brand-color);
+  color: #fff;
+  transition: background 0.2s var(--ease-out-quart), transform 0.2s var(--ease-out-quart), box-shadow 0.2s var(--ease-out-quart);
 }
 
 .pill-dark:hover {
-  opacity: 0.85;
+  background: var(--brand-color-deep);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(61, 78, 216, 0.28);
+}
+
+.pill-dark:active {
+  transform: translateY(0);
+}
+
+.pill-dark span[aria-hidden] {
+  display: inline-block;
+  transition: transform 0.2s var(--ease-out-quart);
+}
+
+.pill-dark:hover span[aria-hidden] {
+  transform: translate(-2px, 2px);
 }
 
 /* Hero top row */
@@ -196,12 +270,32 @@ body {
 }
 
 .top-right a {
+  position: relative;
   color: var(--text-muted);
   text-decoration: none;
+  transition: color 0.2s var(--ease-out-quart);
+}
+
+.top-right a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.25s var(--ease-out-quart);
 }
 
 .top-right a:hover {
   color: var(--accent-color);
+}
+
+.top-right a:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
 }
 
 /* Avatar */
@@ -247,12 +341,16 @@ body {
 .hero-heading {
   font-size: 2.6rem;
   font-weight: 600;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
   max-width: 760px;
   margin: 0 auto 24px;
 }
 
 .accent {
-  color: var(--accent-color);
+  color: var(--brand-ink);
+  display: inline-block;
+  transition: opacity 0.15s ease;
 }
 
 /* Compact tech tag list (e.g. inside the project modal) */
@@ -291,14 +389,16 @@ body {
 .section-heading {
   font-size: 1.7rem;
   font-weight: 600;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
   max-width: 640px;
   margin: 0 auto 16px;
 }
 
 .badge {
   display: inline-block;
-  background: var(--pill-bg);
-  color: var(--text-muted);
+  background: var(--brand-color-soft);
+  color: var(--brand-ink);
   font-size: 0.75rem;
   font-weight: 500;
   padding: 6px 14px;
@@ -309,7 +409,7 @@ body {
 /* Services grid */
 .services-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 36px;
   text-align: left;
 }
@@ -338,6 +438,9 @@ body {
   -webkit-overflow-scrolling: touch;
   padding: 4px 4px 12px;
   margin: -4px -4px 0;
+  /* Edge fade signaling horizontal overflow; script.js updates the mask
+     based on scroll position so it only fades the side with more content. */
+  transition: mask-image 0.2s var(--ease-out-quart), -webkit-mask-image 0.2s var(--ease-out-quart);
 }
 
 .projects-grid::-webkit-scrollbar {
@@ -366,11 +469,13 @@ body {
   text-align: left;
   font: inherit;
   cursor: pointer;
-  transition: transform 0.2s, background 0.3s;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  transition: transform 0.2s var(--ease-out-quart), background 0.3s, box-shadow 0.2s var(--ease-out-quart);
 }
 
 .project-card:hover {
   transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(61, 78, 216, 0.18);
 }
 
 .project-card h3 {
@@ -425,7 +530,6 @@ body.modal-open {
 .modal-card {
   position: relative;
   background: var(--card-bg);
-  border: 1px solid var(--border-color);
   border-radius: 28px;
   padding: 40px;
   width: 100%;
@@ -434,8 +538,9 @@ body.modal-open {
   overflow-y: auto;
   scrollbar-width: none;
   text-align: center;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18);
   transform: translateY(24px);
-  transition: transform 0.25s ease;
+  transition: transform 0.25s var(--ease-out-quart);
 }
 
 .modal-card::-webkit-scrollbar {
@@ -519,18 +624,20 @@ footer {
   font-size: 1.3rem;
   cursor: pointer;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s var(--ease-out-quart), box-shadow 0.2s var(--ease-out-quart);
 }
 
-/* Fade-in animations */
+.theme-btn:hover {
+  transform: scale(1.08);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Fade-in sections are fully visible by default (see script.js: the entrance
+   motion plays via the Web Animations API as a one-off overlay on top of this
+   resting state, so content is never gated behind JS or observer timing). */
 .fade-in {
-  opacity: 0;
-  transform: translateY(40px);
-  transition: opacity 1s ease, transform 1s ease;
-}
-
-.fade-in.show {
   opacity: 1;
-  transform: translateY(0);
+  transform: none;
 }
 
 /* Tablet and below */
@@ -558,6 +665,7 @@ footer {
   }
 
   .services-grid {
+    grid-template-columns: repeat(2, 1fr);
     gap: 24px;
   }
 }
@@ -602,5 +710,16 @@ footer {
   .services-grid {
     grid-template-columns: 1fr;
     gap: 20px;
+  }
+}
+
+/* Reduced motion: replace drift/reveal choreography with an instant or crossfade alternative */
+@media (prefers-reduced-motion: reduce) {
+  .blob {
+    animation: none;
+  }
+
+  .accent {
+    transition: none;
   }
 }
