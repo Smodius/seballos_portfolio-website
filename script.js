@@ -1,4 +1,12 @@
 
+// Set to false to hide the GitHub Activity section (e.g. if the
+// contribution graph looks too sparse to show off).
+const SHOW_GITHUB_ACTIVITY = false;
+if (!SHOW_GITHUB_ACTIVITY) {
+  const githubActivitySection = document.getElementById("github-activity");
+  if (githubActivitySection) githubActivitySection.remove();
+}
+
 // Smooth scroll to contact section
 const contactBtn = document.getElementById("contactBtn");
 if (contactBtn) {
@@ -7,13 +15,14 @@ if (contactBtn) {
   });
 }
 
-// Form submission alert
-const contactForm = document.getElementById("contactForm");
-if (contactForm) {
-  contactForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-    alert("Thank you! Your message has been sent.");
-    e.target.reset();
+// Expand/collapse the About Me bio
+const aboutBioText = document.getElementById("aboutBioText");
+const aboutReadMoreBtn = document.getElementById("aboutReadMoreBtn");
+if (aboutBioText && aboutReadMoreBtn) {
+  aboutReadMoreBtn.addEventListener("click", () => {
+    const expanded = aboutBioText.classList.toggle("expanded");
+    aboutReadMoreBtn.textContent = expanded ? "Show less" : "Read more";
+    aboutReadMoreBtn.setAttribute("aria-expanded", String(expanded));
   });
 }
 

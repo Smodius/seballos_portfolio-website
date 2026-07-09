@@ -186,9 +186,7 @@ p {
 .pill:focus-visible,
 .project-card:focus-visible,
 .modal-close:focus-visible,
-.theme-btn:focus-visible,
-#contactForm input:focus-visible,
-#contactForm textarea:focus-visible {
+.theme-btn:focus-visible {
   outline: 2px solid var(--brand-ink);
   outline-offset: 2px;
 }
@@ -308,6 +306,8 @@ p {
 }
 
 .avatar {
+  position: relative;
+  overflow: hidden;
   width: 92px;
   height: 92px;
   border-radius: 50%;
@@ -319,6 +319,16 @@ p {
   font-size: 2rem;
   font-weight: 600;
   margin: 0 auto;
+}
+
+.avatar-photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 20%;
+  transform: scale(1.15);
 }
 
 .name-badge {
@@ -371,18 +381,129 @@ p {
   border-radius: 999px;
 }
 
-/* Skills / logo strip */
-.skills-strip {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 12px 28px;
-  margin-top: 40px;
-  padding-top: 24px;
-  border-top: 1px solid var(--border-color);
+/* About Me bento section */
+.bento-grid {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  align-items: start;
+  gap: 20px;
+}
+
+.bento-card {
+  background: var(--card-bg);
+  border-radius: 32px;
+  padding: 48px;
+  text-align: left;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  transition: background 0.3s;
+}
+
+body.dark .bento-card {
+  box-shadow: none;
+}
+
+.bento-name {
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.bento-roles {
+  font-weight: 600;
   color: var(--text-muted);
+  max-width: 480px;
+}
+
+.bento-divider {
+  display: block;
+  width: 48px;
+  height: 2px;
+  background: var(--border-color);
+  margin: 24px 0 20px;
+}
+
+.bento-label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+
+.about-bio {
+  color: var(--text-muted);
+  max-width: 560px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  overflow: hidden;
+}
+
+.about-bio.expanded {
+  -webkit-line-clamp: unset;
+  overflow: visible;
+}
+
+.read-more-btn {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--text-muted);
+  font-family: inherit;
+  font-size: 0.85rem;
   font-weight: 500;
-  font-size: 0.9rem;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.tech-group {
+  margin-top: 20px;
+}
+
+.tech-group:first-of-type {
+  margin-top: 0;
+}
+
+.tech-group-label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.bento-tools .tech-tags {
+  justify-content: flex-start;
+  margin: 0;
+}
+
+/* Tablet and below: stack bento tiles full width */
+@media (max-width: 1023px) {
+  .bento-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .bento-card {
+    padding: 32px 28px;
+  }
+}
+
+@media (max-width: 599px) {
+  .bento-card {
+    padding: 22px 16px;
+    border-radius: 22px;
+  }
+
+  .bento-name {
+    font-size: 1.6rem;
+  }
 }
 
 /* Section headings */
@@ -415,8 +536,13 @@ p {
 }
 
 .service-icon {
-  font-size: 1.4rem;
-  margin-bottom: 10px;
+  color: var(--brand-ink);
+  margin-bottom: 12px;
+}
+
+.service-icon svg {
+  width: 26px;
+  height: 26px;
 }
 
 .service h4 {
@@ -566,41 +692,57 @@ body.modal-open {
 }
 
 /* Contact card */
-.contact-icon {
-  font-size: 1.8rem;
-  margin-bottom: 16px;
+
+.contact-sub {
+  color: var(--text-muted);
+  max-width: 460px;
+  margin: 0 auto 28px;
 }
 
 .contact-actions {
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 12px;
-  margin-bottom: 28px;
   flex-wrap: wrap;
 }
 
-#contactForm {
+.github-badge {
   display: flex;
-  flex-direction: column;
-  gap: 15px;
-  max-width: 420px;
-  margin: 0 auto;
-  text-align: left;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+  color: var(--text-muted);
+  margin-bottom: 20px;
 }
 
-#contactForm input,
-#contactForm textarea {
-  padding: 10px 14px;
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
+.github-badge span {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.github-graph-link {
+  display: block;
+  max-width: 700px;
+  margin: 28px auto 0;
+  padding: 20px 24px;
+  border-radius: 20px;
   background: var(--pill-bg);
-  color: var(--text-color);
-  font-family: inherit;
+  text-decoration: none;
+  transition: transform 0.2s var(--ease-out-quart), background 0.2s var(--ease-out-quart);
 }
 
-#contactForm button {
-  align-self: center;
-  margin-top: 4px;
+.github-graph-link:hover {
+  transform: translateY(-2px);
+  background: var(--border-color);
+}
+
+.github-graph-link img {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 /* Footer */
