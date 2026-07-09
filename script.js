@@ -5,6 +5,9 @@ const SHOW_GITHUB_ACTIVITY = false;
 if (!SHOW_GITHUB_ACTIVITY) {
   const githubActivitySection = document.getElementById("github-activity");
   if (githubActivitySection) githubActivitySection.remove();
+
+  const navGithub = document.getElementById("navGithub");
+  if (navGithub) navGithub.remove();
 }
 
 // Smooth scroll to contact section
@@ -125,7 +128,6 @@ const themeToggle = document.getElementById("themeToggle");
 if (themeToggle) {
   themeToggle.addEventListener("click", () => {
     document.body.classList.toggle("dark");
-    themeToggle.textContent = document.body.classList.contains("dark") ? "☀️" : "🌙";
   });
 }
 

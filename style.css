@@ -50,6 +50,11 @@ body.dark .project-card {
   box-shadow: none;
 }
 
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 76px;
+}
+
 body {
   font-family: 'Poppins', sans-serif;
   line-height: 1.6;
@@ -153,9 +158,74 @@ p {
   max-width: 1100px;
   margin: 0 auto;
   padding: 40px 20px 80px;
+  margin-top: 68px;
   display: flex;
   flex-direction: column;
   gap: 20px;
+}
+
+/* Hovering primary nav: a floating pill, not a full-width bar */
+.site-nav {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 500;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 4px;
+  max-width: calc(100% - 32px);
+  padding: 8px;
+  border-radius: 999px;
+  overflow-x: auto;
+  background: var(--card-bg);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  transition: background 0.3s;
+}
+
+body.dark .site-nav {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.site-nav-divider {
+  flex: 0 0 auto;
+  width: 1px;
+  height: 20px;
+  background: var(--border-color);
+  margin: 0 4px;
+}
+
+.site-nav .theme-btn {
+  position: static;
+  flex: 0 0 auto;
+  width: 34px;
+  height: 34px;
+  font-size: 1rem;
+  border: none;
+  box-shadow: none;
+}
+
+.site-nav-link {
+  flex: 0 0 auto;
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.2s var(--ease-out-quart), color 0.2s var(--ease-out-quart);
+}
+
+.site-nav-link:hover {
+  background: var(--pill-bg);
+  color: var(--text-color);
+}
+
+.site-nav-link:focus-visible {
+  outline: 2px solid var(--brand-ink);
+  outline-offset: 2px;
 }
 
 /* Shared card shell */
@@ -758,12 +828,15 @@ footer {
   position: fixed;
   bottom: 24px;
   right: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: var(--card-bg);
   border: 1px solid var(--border-color);
+  color: var(--text-color);
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  font-size: 1.3rem;
   cursor: pointer;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
   transition: transform 0.2s var(--ease-out-quart), box-shadow 0.2s var(--ease-out-quart);
@@ -772,6 +845,23 @@ footer {
 .theme-btn:hover {
   transform: scale(1.08);
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+.theme-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+.theme-btn .icon-sun {
+  display: none;
+}
+
+body.dark .theme-btn .icon-moon {
+  display: none;
+}
+
+body.dark .theme-btn .icon-sun {
+  display: block;
 }
 
 /* Fade-in sections are fully visible by default (see script.js: the entrance
@@ -857,6 +947,10 @@ footer {
 
 /* Reduced motion: replace drift/reveal choreography with an instant or crossfade alternative */
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
   .blob {
     animation: none;
   }

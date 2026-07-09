@@ -25,10 +25,24 @@
 
 <canvas id="bg3d-canvas" aria-hidden="true"></canvas>
 
+<nav class="site-nav" id="siteNav" aria-label="Primary">
+	<a class="site-nav-link" href="#top">Home</a>
+	<a class="site-nav-link" href="#about-me">About</a>
+	<a class="site-nav-link" href="#about">Services</a>
+	<a class="site-nav-link" href="#projects">Projects</a>
+	<a class="site-nav-link" href="#github-activity" id="navGithub">GitHub</a>
+	<a class="site-nav-link" href="#contact">Contact</a>
+	<span class="site-nav-divider" aria-hidden="true"></span>
+	<button id="themeToggle" class="theme-btn" aria-label="Toggle dark mode">
+		<svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+		<svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
+	</button>
+</nav>
+
 <div class="page">
 
 	<!-- Hero Card -->
-	<section class="card hero-card fade-in">
+	<section id="top" class="card hero-card fade-in">
 		<div class="top-row">
 			<div class="top-left">
 				<span class="pill pill-static">joshuaseballosc@gmail.com</span>
@@ -36,9 +50,7 @@
 				<a class="pill pill-btn" href="#contact">CV</a>
 			</div>
 			<div class="top-right">
-				<a href="#">LinkedIn</a>
-				<span>/</span>
-				<a href="#">GitHub</a>
+				<a href="https://www.linkedin.com/in/joshua-seballos-9096a41b5/" target="_blank" rel="noopener">LinkedIn</a>
 			</div>
 		</div>
 
@@ -228,7 +240,7 @@
 		<div class="contact-actions">
 			<a class="pill pill-dark" href="mailto:joshuaseballosc@gmail.com">Email Me</a>
 			<span class="pill pill-static">joshuaseballosc@gmail.com</span>
-			<a class="pill pill-btn" href="#">LinkedIn</a>
+			<a class="pill pill-btn" href="https://www.linkedin.com/in/joshua-seballos-9096a41b5/" target="_blank" rel="noopener">LinkedIn</a>
 		</div>
 	</section>
 
@@ -307,8 +319,6 @@
 	<p>Describe this landing page project here: what it does, the tech stack you used, and
 		your role in building it.</p>
 </template>
-
-<button id="themeToggle" class="theme-btn">🌙</button>
 
 <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
 <script src="bg3d.js"></script>
