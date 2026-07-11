@@ -1,7 +1,7 @@
 
 // Set to false to hide the GitHub Activity section (e.g. if the
 // contribution graph looks too sparse to show off).
-const SHOW_GITHUB_ACTIVITY = false;
+const SHOW_GITHUB_ACTIVITY = true;
 if (!SHOW_GITHUB_ACTIVITY) {
   const githubActivitySection = document.getElementById("github-activity");
   if (githubActivitySection) githubActivitySection.remove();
