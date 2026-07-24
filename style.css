@@ -451,12 +451,33 @@ body.dark .site-nav {
   border-radius: 999px;
 }
 
-/* About Me bento section */
+/* About Me bento section: About and GitHub stack in the left column,
+   Tools spans both rows in the right column */
 .bento-grid {
   display: grid;
   grid-template-columns: 1.6fr 1fr;
-  align-items: start;
+  grid-template-areas:
+    "about tools"
+    "github tools";
   gap: 20px;
+}
+
+.bento-about {
+  grid-area: about;
+}
+
+.bento-github {
+  grid-area: github;
+}
+
+.bento-tools {
+  grid-area: tools;
+}
+
+.github-heading {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 4px;
 }
 
 .bento-card {
@@ -558,6 +579,10 @@ body.dark .bento-card {
 @media (max-width: 1023px) {
   .bento-grid {
     grid-template-columns: 1fr;
+    grid-template-areas:
+      "about"
+      "github"
+      "tools";
   }
 
   .bento-card {
